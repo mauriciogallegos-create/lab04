@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieCounterTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ComponentsExample(modifier = Modifier.padding(innerPadding))
+                    MovieCounter(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -64,14 +64,15 @@ fun ComponentsExample(modifier: Modifier = Modifier) {
 
 @Composable
 fun MovieCounter(modifier: Modifier = Modifier) {
-    val count = 0
+    val count = remember { mutableStateOf(0) }
+
     Column(
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "You have added $count movies.")
+        Text(text = "You have added ${count.value} movies.")
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { /* Acción del botón */ }) {
+        Button(onClick = { count.value++ }) {
             Text("Add Movie")
         }
     }

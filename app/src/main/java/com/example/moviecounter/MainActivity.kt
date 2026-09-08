@@ -4,13 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.moviecounter.ui.theme.MovieCounterTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,10 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MovieCounterTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    ComponentsExample(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -31,17 +34,25 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun ComponentsExample(modifier: Modifier = Modifier) {
+    val checkedState = remember { mutableStateOf(true) }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MovieCounterTheme {
-        Greeting("Android")
+    Column(modifier = modifier.padding(16.dp)) {
+        // Componente 1: Card
+        Card(modifier = Modifier.padding(bottom = 16.dp)) {
+            Text(text = "Componente Card", modifier = Modifier.padding(16.dp))
+        }
+
+        // Componente 2: Switch
+        Switch(
+            checked = checkedState.value,
+            onCheckedChange = { checkedState.value = it },
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Componente 3: FloatingActionButton
+        FloatingActionButton(onClick = { }) {
+            Text(text = "+", modifier = Modifier.padding(16.dp))
+        }
     }
 }

@@ -19,7 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ComponentsExample(modifier: Modifier = Modifier) {
-    var checkedState by remember { mutableStateOf(true) }
+    var checkedState by rememberSaveable { mutableStateOf(true) }
 
     Column(modifier = modifier.padding(16.dp)) {
         // Componente 1: Card
@@ -67,8 +67,8 @@ fun ComponentsExample(modifier: Modifier = Modifier) {
 
 @Composable
 fun MovieCounter(modifier: Modifier = Modifier) {
-    var count by remember { mutableStateOf(0) }
-    var movieName by remember { mutableStateOf("") }
+    var count by rememberSaveable { mutableStateOf(0) }
+    var movieName by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = modifier.padding(16.dp),

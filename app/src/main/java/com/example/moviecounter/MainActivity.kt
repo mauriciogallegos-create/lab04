@@ -15,9 +15,12 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ComponentsExample(modifier: Modifier = Modifier) {
-    val checkedState = remember { mutableStateOf(true) }
+    var checkedState by remember { mutableStateOf(true) }
 
     Column(modifier = modifier.padding(16.dp)) {
         // Componente 1: Card
@@ -50,8 +53,8 @@ fun ComponentsExample(modifier: Modifier = Modifier) {
 
         // Componente 2: Switch
         Switch(
-            checked = checkedState.value,
-            onCheckedChange = { checkedState.value = it },
+            checked = checkedState,
+            onCheckedChange = { checkedState = it },
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -64,15 +67,27 @@ fun ComponentsExample(modifier: Modifier = Modifier) {
 
 @Composable
 fun MovieCounter(modifier: Modifier = Modifier) {
-    val count = remember { mutableStateOf(0) }
+    var count by remember { mutableStateOf(0) }
+    var movieName by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "You have added ${count.value} movies.")
+        Text(text = "You have added $count movies.")
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { count.value++ }) {
+        TextField(
+            value = movieName,
+            onValueChange = { movieName = it },
+            label = { Text("Movie Name") }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = {
+            if (movieName.isNotBlank()) {
+                count++
+                movieName = ""
+            }
+        }) {
             Text("Add Movie")
         }
     }
